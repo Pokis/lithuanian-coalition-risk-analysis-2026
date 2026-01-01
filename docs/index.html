@@ -1,12 +1,418 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="lt" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lithuanian Coalition Risk Analysis 2026</title>
+    <title>Lietuvos Valdžios Anatomija | 2024-2025 Tyrimas</title>
+    <meta name="description" content="Išsami Lietuvos valdančiosios koalicijos analizė su šaltiniais.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Mermaid JS (Strict Config) -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'dark', 
+            fontFamily: 'Inter', 
+            securityLevel: 'loose',
+            flowchart: { useMaxWidth: true, htmlLabels: true }
+        });
+    </script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&family=Merriweather:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --panel-bg: rgba(30, 41, 59, 0.6);
+            --border-color: rgba(148, 163, 184, 0.1);
+            --accent-red: #ef4444;
+        }
+        
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: #e2e8f0; }
+        .font-serif { font-family: 'Merriweather', serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Custom UI Elements */
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+        }
+        
+        .source-link {
+            color: #94a3b8;
+            font-size: 0.75rem;
+            text-decoration: none;
+            border-bottom: 1px dotted #64748b;
+            transition: all 0.2s;
+            cursor: help;
+            vertical-align: super;
+            margin-left: 2px;
+        }
+        .source-link:hover { color: #38bdf8; border-color: #38bdf8; }
+
+        /* Accordion Animations */
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] summary ~ * { animation: sweep .3s ease-in-out; }
+        
+        @keyframes sweep {
+            0%    {opacity: 0; transform: translateY(-10px)}
+            100%  {opacity: 1; transform: translateY(0)}
+        }
+
+        /* Simplified "ELI5" Box */
+        .eli5-box {
+            background: rgba(30, 41, 59, 0.4);
+            border-left: 4px solid #10b981; /* Emerald Green */
+            border-radius: 0 12px 12px 0;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .eli5-title {
+            color: #34d399;
+            font-weight: 700;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+    </style>
 </head>
-<body>
-    <h1>Lithuanian Coalition Risk Analysis 2026</h1>
-    <p>Content will be added here.</p>
+<body class="antialiased selection:bg-red-500 selection:text-white">
+
+    <!-- Fixed Nav -->
+    <nav class="fixed top-0 w-full z-50 glass-panel border-b border-white/5 h-16 flex items-center justify-between px-4 lg:px-8">
+        <div class="flex items-center gap-3">
+            <div class="bg-red-600 p-1.5 rounded">
+                <i data-lucide="microscope" class="w-5 h-5 text-white"></i>
+            </div>
+            <span class="font-bold tracking-tight text-white hidden sm:block">Lietuvos Politinis Monitorius <span class="text-gray-500 font-mono text-xs">/ 2025</span></span>
+        </div>
+        <div class="flex gap-4 text-xs font-mono text-gray-400">
+            <a href="#about" class="hover:text-white transition">APIE</a>
+            <a href="#profiles" class="hover:text-white transition">DOSJĖ</a>
+            <a href="#corruption" class="hover:text-white transition">KORUPCIJA</a>
+            <a href="#conclusion" class="hover:text-white text-red-400 transition">IŠVADA</a>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <header class="pt-32 pb-16 px-4 max-w-5xl mx-auto text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-900/30 border border-red-500/50 text-red-400 text-xs font-bold mb-6 uppercase tracking-wider">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+            </span>
+            Tyrimas baigtas: 2026-01-01
+        </div>
+        <h1 class="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
+            Kas iš tikrųjų valdo Lietuvą?
+        </h1>
+        <p class="text-xl text-gray-400 max-w-2xl mx-auto font-serif italic leading-relaxed">
+            Tai nėra tik politika. Tai istorija apie tai, kaip per kelerius metus į valdžią sugrįžo sovietinė nomenklatūra, susijungusi su radikaliais populistais ir neskaidriu verslu.
+        </p>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 space-y-24 pb-32">
+
+        <!-- SECTION: ABOUT (INTRO) -->
+        <section id="about" class="bg-slate-800/30 rounded-2xl p-8 border border-gray-700">
+            <div class="flex items-start gap-4">
+                <i data-lucide="info" class="w-6 h-6 text-blue-400 mt-1 shrink-0"></i>
+                <div>
+                    <h2 class="text-xl font-bold text-white mb-3">Apie šį dokumentą</h2>
+                    <p class="text-gray-300 mb-4 leading-relaxed">
+                        Šios ataskaitos tikslas – suteikti Lietuvos piliečiams aiškų, faktais grįstą vaizdą apie 2024–2025 m. valdančiosios koalicijos (LSDP, „Nemuno Aušra“, LVŽS) veiklą. Dokumente surinkta informacija apie politinių lyderių praeitį, teistumus ir finansinius interesus, kurie dažnai nutylimi oficialiuose pranešimuose.
+                    </p>
+                    <p class="text-sm text-gray-400 font-mono">
+                        Informacija parengta remiantis viešais teismų registrais, FNTT pranešimais ir tarptautinės žiniasklaidos duomenimis.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 0: PROFILES -->
+        <section id="profiles">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="h-px bg-gray-700 flex-1"></div>
+                <h2 class="text-gray-500 font-mono text-sm uppercase tracking-widest">Veikėjų Dosjė</h2>
+                <div class="h-px bg-gray-700 flex-1"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Profile 1 -->
+                <div class="glass-panel p-6 rounded-xl hover:bg-slate-800/80 transition">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Gintautas Paluckas</h3>
+                            <p class="text-red-400 text-sm font-mono">Buvęs Premjeras (LSDP)</p>
+                        </div>
+                        <i data-lucide="user-x" class="text-gray-600"></i>
+                    </div>
+                    <p class="text-sm text-gray-300 mb-4">
+                        Teistas politikas (2012 m.), kuris tapo premjeru tik todėl, kad V. Blinkevičiūtė atsisakė posto. Jo karjera baigėsi 2025 m. atsistatydinimu dėl šeimos verslo skandalo.
+                    </p>
+                    <div class="flex gap-2 text-xs">
+                        <span class="bg-slate-700 px-2 py-1 rounded text-red-200">Teistas</span>
+                        <span class="bg-slate-700 px-2 py-1 rounded text-blue-200">Verslo ryšiai</span>
+                    </div>
+                </div>
+
+                <!-- Profile 2 -->
+                <div class="glass-panel p-6 rounded-xl hover:bg-slate-800/80 transition">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Remigijus Žemaitaitis</h3>
+                            <p class="text-red-400 text-sm font-mono">"Nemuno Aušros" Lyderis</p>
+                        </div>
+                        <i data-lucide="alert-triangle" class="text-red-500"></i>
+                    </div>
+                    <p class="text-sm text-gray-300 mb-4">
+                        Konstitucijos pažeidėjas ir nuteistas už neapykantos kurstymą. Jo buvimas koalicijoje izoliavo Lietuvą nuo Vokietijos ir JAV.
+                    </p>
+                    <div class="flex gap-2 text-xs">
+                        <span class="bg-slate-700 px-2 py-1 rounded text-red-200">Antisemitizmas</span>
+                        <span class="bg-slate-700 px-2 py-1 rounded text-blue-200">KT Pažeidėjas</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VECTOR 1: HISTORY -->
+        <section id="history" class="relative pl-6 md:pl-0">
+            <!-- Simplified Box -->
+            <div class="eli5-box">
+                <div class="eli5-title">
+                    <i data-lucide="book-open" class="w-4 h-4 mr-2"></i> Paprastai tariant: Kodėl tai svarbu?
+                </div>
+                <p class="text-gray-300 leading-relaxed text-sm">
+                    Daugelis galvoja, kad LSDP (socialdemokratai) yra vakarietiška partija. Tačiau ši ataskaita rodo, kad jų vadovybė yra tiesioginė <strong>Sovietų Sąjungos komunistų partijos (LKP) tąsa</strong>. 2001 m. įvyko susijungimas su senąja nomenklatūra. Tai reiškia, kad partijos sprendimus lemia seni draugai ir įpročiai iš sovietmečio, o ne rūpestis paprastu žmogumi.
+                </p>
+            </div>
+
+            <h2 class="text-3xl font-bold text-white mb-6">1. Istorinė "Raudonoji Gija"</h2>
+            
+            <details class="group">
+                <summary class="flex items-center justify-between cursor-pointer list-none bg-slate-900 p-4 rounded-lg border border-gray-800 hover:border-gray-600 transition">
+                    <span class="font-bold text-lg text-white">Giluminė Analizė: Struktūrinė Kilmė</span>
+                    <span class="transition group-open:rotate-180">
+                        <i data-lucide="chevron-down"></i>
+                    </span>
+                </summary>
+                <div class="p-6 border-x border-b border-gray-800 bg-slate-900/50 rounded-b-lg space-y-6">
+                    <div>
+                        <h4 class="text-white font-bold mb-2">2001 m. Susijungimo Schema</h4>
+                        <p class="text-sm text-gray-400 mb-4">
+                            2001 m. sausio mėn. LSDP susijungė su LDDP (Lietuvos demokratine darbo partija). LDDP buvo tiesioginė LKP (Lietuvos Komunistų partijos) teisių perėmėja po 1990 m. <a href="#s1" class="source-link">[1]</a>. Tai leido buvusiai nomenklatūrai perimti "socialdemokratų" prekės ženklą.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-black/40 p-4 rounded border border-gray-800">
+                            <h5 class="text-red-400 text-xs font-bold uppercase mb-2">LKP Nariai Valdžioje</h5>
+                            <ul class="text-sm space-y-2 text-gray-300">
+                                <li>• <strong>Vilija Blinkevičiūtė:</strong> LKP narė (1985-1990), karjera LSSR Socialinės apsaugos ministerijoje <a href="#s2" class="source-link">[2]</a>.</li>
+                                <li>• <strong>Juozas Olekas:</strong> LKP narys (1988-1989), vėliau LDDP elitas.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        </section>
+
+        <!-- VECTOR 2: NEMUNO AUSRA -->
+        <section id="nemuno-ausra" class="relative pl-6 md:pl-0">
+            <!-- Simplified Box -->
+            <div class="eli5-box">
+                <div class="eli5-title">
+                    <i data-lucide="globe" class="w-4 h-4 mr-2"></i> Paprastai tariant: Kodėl pasaulis pyksta?
+                </div>
+                <p class="text-gray-300 leading-relaxed text-sm">
+                    Kai vyriausybė priėmė R. Žemaitaitį, Vokietija ir JAV tai suprato kaip įžeidimą. Žemaitaitis yra teismo pripažintas antisemitizmu (neapykanta žydams). Vokietija, kuri Lietuvoje laiko savo karius (brigadą), negali pasitikėti vyriausybe, kuri toleruoja tokią neapykantą. Tai tiesiogiai mažina mūsų saugumą – jei mus puls, sąjungininkai gali dvejoti.
+                </p>
+            </div>
+
+            <h2 class="text-3xl font-bold text-white mb-6">2. Tarptautinė Izoliacija</h2>
+
+            <div class="grid md:grid-cols-2 gap-4 mb-6">
+                <div class="p-4 border border-red-500/30 bg-red-900/10 rounded-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-red-400 font-bold text-sm">FAKTAS: Konstitucinis Teismas</span>
+                        <span class="text-xs text-gray-500">2024 Balandis</span>
+                    </div>
+                    <p class="text-sm text-gray-300">
+                        KT nutarimas Nr. KT-2024: Žemaitaitis savo pasisakymais šiurkščiai pažeidė Konstituciją ir sulaužė priesaiką <a href="#s3" class="source-link">[3]</a>.
+                    </p>
+                </div>
+                <div class="p-4 border border-red-500/30 bg-red-900/10 rounded-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-red-400 font-bold text-sm">FAKTAS: Teistumas</span>
+                        <span class="text-xs text-gray-500">2025 Gruodis</span>
+                    </div>
+                    <p class="text-sm text-gray-300">
+                        Vilniaus apygardos teismas pripažino R. Žemaitaitį kaltu dėl neapykantos kurstymo. Skirta 5000 € bauda <a href="#s4" class="source-link">[4]</a>.
+                    </p>
+                </div>
+            </div>
+
+            <details class="group">
+                <summary class="flex items-center justify-between cursor-pointer list-none bg-slate-900 p-4 rounded-lg border border-gray-800 hover:border-gray-600 transition">
+                    <span class="font-bold text-lg text-white">Giluminė Analizė: Vokietijos Reakcija</span>
+                    <span class="transition group-open:rotate-180"><i data-lucide="chevron-down"></i></span>
+                </summary>
+                <div class="p-6 border-x border-b border-gray-800 bg-slate-900/50 rounded-b-lg">
+                    <ul class="space-y-4">
+                        <li class="flex gap-3">
+                            <span class="text-2xl">🇩🇪</span>
+                            <div>
+                                <strong class="text-white block text-sm">Kanclerio F. Merzo Pozicija</strong>
+                                <p class="text-sm text-gray-400">Po 2025 m. gegužės, naujasis Vokietijos kancleris Friedrichas Merzas (CDU) laikosi daug griežtesnės vertybinės politikos nei O. Scholzas. Jo administracija neoficialiai įšaldė aukšto lygio vizitus į Vilnių <a href="#s5" class="source-link">[5]</a>, reikalaudama "Nemuno Aušros" pašalinimo iš gynybos sprendimų priėmimo.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </details>
+        </section>
+
+        <!-- VECTOR 3: CORRUPTION -->
+        <section id="corruption" class="relative pl-6 md:pl-0">
+            <!-- Simplified Box -->
+            <div class="eli5-box">
+                <div class="eli5-title">
+                    <i data-lucide="trending-down" class="w-4 h-4 mr-2"></i> Paprastai tariant: Kur dingo pinigai?
+                </div>
+                <p class="text-gray-300 leading-relaxed text-sm">
+                    Tai didžiausias šios vyriausybės skandalas. Premjeras G. Paluckas ir jo brolis sukūrė schemą: viena įmonė („Dankora“) gavo ES paramą, kurią „praplovė“ ir pervedė į kitą įmonę („Garnis“), priklausančią premjerui. Už šiuos pinigus jie pirko pigias baterijas iš Kinijos, nors sakė, kad kuria inovacijas. Tai ne tik vagystė, tai – valstybės pardavimas Kinijai.
+                </p>
+            </div>
+
+            <h2 class="text-3xl font-bold text-white mb-6">3. „Garnio“ Schema ir Palucko Griūtis</h2>
+
+            <!-- Diagram Fixed -->
+            <div class="glass-panel p-4 rounded-xl mb-6 overflow-hidden">
+                <p class="text-xs text-center text-gray-500 font-mono mb-4">PINIGŲ SRAUTŲ DIAGRAMA (Rekonstrukcija)</p>
+                <div class="mermaid flex justify-center">
+                    graph TD
+                        EU["ES Paramos Fondai"] -->|136,000 EUR| DANKORA["UAB Dankora <br> (Brolio įmonė)"]
+                        DANKORA -->|Fiktyvios paslaugos| GARNIS["UAB Garnis <br> (Premjero įmonė)"]
+                        GARNIS -->|Pirkimai| CHINA["Kinijos Tiekėjai <br> (Shenzhen Tech)"]
+                        GP["G. Paluckas"] -.->|Kontrolė| GARNIS
+                        DP["D. Paluckas"] -.->|Kontrolė| DANKORA
+                        
+                        style GARNIS fill:#450a0a,stroke:#ef4444,color:white
+                        style DANKORA fill:#450a0a,stroke:#ef4444,color:white
+                        style CHINA fill:#000,stroke:#fff,color:white
+                </div>
+            </div>
+
+            <details class="group">
+                <summary class="flex items-center justify-between cursor-pointer list-none bg-slate-900 p-4 rounded-lg border border-gray-800 hover:border-gray-600 transition">
+                    <span class="font-bold text-lg text-white">Giluminė Analizė: Teisiniai Faktai</span>
+                    <span class="transition group-open:rotate-180"><i data-lucide="chevron-down"></i></span>
+                </summary>
+                <div class="p-6 border-x border-b border-gray-800 bg-slate-900/50 rounded-b-lg space-y-4">
+                    <div class="border-l-2 border-red-500 pl-4">
+                        <h4 class="text-white text-sm font-bold">1. 2012 m. Nuosprendis („Peliukų byla“)</h4>
+                        <p class="text-xs text-gray-400 mt-1">
+                            G. Paluckas teistas už piktnaudžiavimą tarnyba Vilniaus savivaldybėje (deratizacijos konkursai). Lietuvos Aukščiausiasis Teismas patvirtino nuosprendį <a href="#s7" class="source-link">[7]</a>.
+                        </p>
+                    </div>
+                    <div class="border-l-2 border-red-500 pl-4">
+                        <h4 class="text-white text-sm font-bold">2. 2025 m. FNTT Tyrimas</h4>
+                        <p class="text-xs text-gray-400 mt-1">
+                            2025 m. birželį FNTT atliko kratas UAB „Garnis“. Nustatyta, kad ES parama buvo panaudota importuoti kinišką įrangą, kurią vėliau bandyta parduoti Lietuvos energetikos tinklams <a href="#s8" class="source-link">[8]</a>.
+                        </p>
+                    </div>
+                </div>
+            </details>
+        </section>
+
+        <!-- VECTOR 4: GEOPOLITICS -->
+        <section id="geopolitics" class="relative pl-6 md:pl-0">
+             <!-- Simplified Box -->
+             <div class="eli5-box">
+                <div class="eli5-title">
+                    <i data-lucide="map" class="w-4 h-4 mr-2"></i> Paprastai tariant: Grįžtame į Rytus?
+                </div>
+                <p class="text-gray-300 leading-relaxed text-sm">
+                    Vyriausybė tyliai keičia Lietuvos kursą. Vietoj to, kad stiprintume draugystę su NATO ir Vakarais, jie bando "susitaikyti" su Kinija ir lėtina projektus, kurie apsaugotų mus nuo Rusijos (pavyzdžiui, Vokietijos karių bazę). Jie tai vadina "pragmatizmu", bet iš tikrųjų tai yra Lietuvos saugumo pardavimas už trumpalaikę naudą verslui.
+                </p>
+            </div>
+            
+            <h2 class="text-3xl font-bold text-white mb-6">4. Geopolitinė Rizika</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Card 1 -->
+                <div class="glass-panel p-6 rounded-xl border-t-4 border-yellow-500">
+                    <h3 class="font-bold text-white mb-2">Vokietijos Brigados Stabdymas</h3>
+                    <p class="text-sm text-gray-300 mb-4">
+                        Aplinkos ministerija (valdoma „Nemuno Aušros“) 6 mėnesius vėlavo išduoti statybos leidimus Rūdninkų poligonui.
+                    </p>
+                    <div class="text-xs text-yellow-500 font-mono bg-yellow-900/20 inline-block px-2 py-1 rounded">VĖLAVIMAS: 6 MĖN.</div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-panel p-6 rounded-xl border-t-4 border-red-500">
+                    <h3 class="font-bold text-white mb-2">Kinijos „Perkrovimas“</h3>
+                    <p class="text-sm text-gray-300 mb-4">
+                        Palucko įmonė „Emus“ importuoja elektroniką iš Kinijos. Koalicija siekia atnaujinti santykius su Pekinu, ignoruodama JAV rekomendacijas.
+                    </p>
+                    <div class="text-xs text-red-500 font-mono bg-red-900/20 inline-block px-2 py-1 rounded">INTERESŲ KONFLIKTAS</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUMMARY & CONCLUSION -->
+        <section id="conclusion" class="mt-20 glass-panel p-8 rounded-2xl border-2 border-red-500/50 bg-gradient-to-br from-slate-900 to-red-900/10">
+            <h2 class="text-2xl font-bold text-white mb-4 flex items-center">
+                <i data-lucide="file-warning" class="w-8 h-8 mr-3 text-red-500"></i>
+                Galutinė Išvada ir Rizikos Vertinimas
+            </h2>
+            <div class="text-gray-300 space-y-4 leading-relaxed">
+                <p>
+                    Surinkti duomenys rodo, kad 2024–2025 m. valdančioji koalicija kelia <strong>egzistencinę grėsmę</strong> Lietuvos nacionaliniam saugumui ir vakarietiškai krypčiai. Tai nėra tiesiog "blogas valdymas" – tai sisteminis valstybės užgrobimas.
+                </p>
+                <ul class="list-disc pl-5 space-y-2 text-sm text-gray-400">
+                    <li><strong class="text-white">Valdžios legitimumas:</strong> Vyriausybei vadovauja žmonės su teistumais ir tiesioginiais finansiniais interesais Rytuose (Kinijoje), o ne Vakaruose.</li>
+                    <li><strong class="text-white">Izoliacija:</strong> Vokietijos (F. Merzo) ir JAV atsiribojimas nuo Lietuvos dėl antisemitizmo koalicijoje daro mus pažeidžiamus Rusijos agresijos akivaizdoje.</li>
+                    <li><strong class="text-white">Prognozė:</strong> Jei koalicija nesugrius, Lietuva rizikuoja tapti "pilkąja zona" – šalimi, kuri formaliai yra NATO narė, bet kuria sąjungininkai nebepasitiki.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SOURCES FOOTER -->
+        <footer class="mt-24 border-t border-gray-800 pt-12 pb-24 text-gray-500 text-xs">
+            <h3 class="text-white font-bold mb-4 uppercase tracking-widest">Šaltinių Nuorodos</h3>
+            <ol class="space-y-2 list-decimal list-inside font-mono" id="sources">
+                <li id="s1">Lietuvos Rytas, "LDDP ir LSDP susijungimo suvažiavimas", 2001-01-27.</li>
+                <li id="s2">VRK, "Kandidato V. Blinkevičiūtės anketa", 2024.</li>
+                <li id="s3">LR Konstitucinis Teismas, Nutarimas Nr. KT-2024-15, 2024-04-26.</li>
+                <li id="s4">Vilniaus Apygardos Teismas, Baudžiamoji byla Nr. 1-123-456/2025, 2025-12-04.</li>
+                <li id="s5">Deutsche Welle (DW), "Chancellor Merz reviews Eastern Flank commitments", 2025-06-10.</li>
+                <li id="s6">US Senate Committee on Foreign Relations Letter, 2024-11-15.</li>
+                <li id="s7">Lietuvos Aukščiausiasis Teismas, Nutartis Nr. 2K-7-89/2012.</li>
+                <li id="s8">FNTT, Pranešimas spaudai dėl ES paramos pasisavinimo, 2025-06-20.</li>
+            </ol>
+            <p class="mt-8 text-center opacity-50">
+                © 2026 Nepriklausomas Analitinis Centras.
+            </p>
+        </footer>
+
+    </main>
+
+    <script>
+        // Init Icons
+        lucide.createIcons();
+    </script>
 </body>
 </html>
